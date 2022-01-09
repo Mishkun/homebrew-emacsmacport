@@ -18,6 +18,7 @@ class EmacsMac < Formula
          "Build with a patch for title bar color inferred by theme (not recommended to use with --HEAD option)"
   option "with-starter", "Build with a starter script to start emacs GUI from CLI"
   option "with-mac-metal", "use Metal framework in application-side double buffering (experimental)"
+  option "with-dynamic-icons", "Implement dynamic icons switching (experimental)"
 
   # icons
   ICONS_INFO = {
@@ -93,6 +94,13 @@ class EmacsMac < Formula
   patch do
     url "https://raw.githubusercontent.com/railwaycat/homebrew-emacsmacport/7e793808ebbc11d519a0103fb9f8fe7efbec345d/patches/mac-arm-fix.diff"
     sha256 "9b58a61931e79863caa5c310a7ec290cc7b84c78aa0086d0ba7192756c370db8"
+  end
+
+  if build.with? "with-dynamic-icons"
+    patch do
+      url "https://github.com/Mishkun/homebrew-emacsmacport/blob/master/patches/dynamic-icon-swithicng-in-emacs-mac.patch"
+      sha256 "3fe6f46fd8ca488290a5b694dc6ed4cc7d797a07f9819a2ee25c2ede6570e36d"
+    end
   end
 
   def install

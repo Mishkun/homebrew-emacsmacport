@@ -1,0 +1,56 @@
+From 9d7d4a586f67f234b1de0e563444673b8f9cc0f3 Mon Sep 17 00:00:00 2001
+From: Mishkun <themishkun@yandex-team.ru>
+Date: Sat, 8 Jan 2022 23:56:33 +0300
+Subject: [PATCH] Add dynamic icon swithicng in emacs-mac
+
+---
+ src/nsfns.m | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/src/nsfns.m b/src/nsfns.m
+index 5f22366939..363b8f38e8 100644
+--- a/src/nsfns.m
++++ b/src/nsfns.m
+@@ -2108,6 +2108,31 @@ Frames are listed from topmost (first) to bottommost (last).  */)
+ 
+ #ifdef NS_IMPL_COCOA
+ 
++
++DEFUN ("ns-set-application-icon", Fns_set_application_icon, Sns_set_application_icon, 1, 1, 0,
++       doc: /* Set the running application's icon to PATH,
++and return true, or return nil if it fails.  */)
++     (Lisp_Object path)
++{
++  CHECK_STRING (path);
++  char *s = SSDATA(path);
++  NSString *ns = [[NSString stringWithUTF8String:s] stringByExpandingTildeInPath];
++  NSURL *url = [NSURL fileURLWithPath:ns];
++  if(!url) {
++    NSLog(@"could not create url for path: %@", ns);
++    return Qnil;
++  }
++  NSImage *img = [[NSImage alloc] initWithContentsOfURL: url];
++  if(!img) {
++    NSLog(@"could not create image from url: %@", url);
++    return Qnil;
++  }
++  NSLog(@"setting application icon");
++  [NSApp setApplicationIconImage:img];
++  return Qt;
++}
++
++
+ /* Compile and execute the AppleScript SCRIPT and return the error
+    status as function value.  A zero is returned if compilation and
+    execution is successful, in which case *RESULT is set to a Lisp
+@@ -3151,6 +3176,7 @@ - (NSString *)panel: (id)sender userEnteredFilename: (NSString *)filename
+   defsubr (&Sns_font_name);
+   defsubr (&Sns_list_colors);
+ #ifdef NS_IMPL_COCOA
++  defsubr (&Sns_set_application_icon);
+   defsubr (&Sns_do_applescript);
+ #endif
+   defsubr (&Sxw_color_defined_p);
+-- 
+2.32.0
+
