@@ -98,8 +98,8 @@ class EmacsMac < Formula
 
   if build.with? "dynamic-icons"
     patch do
-      url "https://github.com/Mishkun/homebrew-emacsmacport/blob/master/patches/dynamic-icon-swithicng-in-emacs-mac.patch"
-      sha256 "3998c77f59769e06ebc22ea859601ca52312b91de591d79a17a4a541e5c12b90"
+      url "https://raw.githubusercontent.com/Mishkun/homebrew-emacsmacport/master/patches/dynamic-icon-swithicng-in-emacs-mac.patch"
+      sha256 "3fe6f46fd8ca488290a5b694dc6ed4cc7d797a07f9819a2ee25c2ede6570e36d"
     end
   end
 
