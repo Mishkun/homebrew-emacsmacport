@@ -96,7 +96,7 @@ class EmacsMac < Formula
     sha256 "9b58a61931e79863caa5c310a7ec290cc7b84c78aa0086d0ba7192756c370db8"
   end
 
-  if build.with? "with-dynamic-icons"
+  if build.with? "dynamic-icons"
     patch do
       url "https://github.com/Mishkun/homebrew-emacsmacport/blob/master/patches/dynamic-icon-swithicng-in-emacs-mac.patch"
       sha256 "3fe6f46fd8ca488290a5b694dc6ed4cc7d797a07f9819a2ee25c2ede6570e36d"
